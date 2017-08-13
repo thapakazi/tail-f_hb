@@ -11,11 +11,12 @@ func PrintFaults(faults *Faults){
 	green := color.New(color.FgGreen).SprintFunc()
 	red := color.New(color.FgRed).SprintFunc()
 
-	for fault_index := range faults.Results {
+	// help_from: https://youtu.be/B-r3Wf_I2Lk?t=144
+	for _, fault := range faults.Results {
 
-		last_notice_at := faults.Results[fault_index].LastNoticeAt
-		message := faults.Results[fault_index].Message
-		notices_count := faults.Results[fault_index].NoticesCount
+		last_notice_at := fault.LastNoticeAt
+		message := fault.Message
+		notices_count := fault.NoticesCount
 
 		fmt.Printf("%s :>> %s %v\n", green(last_notice_at), red(message),  yellow(notices_count))
 	}

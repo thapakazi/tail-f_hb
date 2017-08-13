@@ -1,0 +1,29 @@
+#+DATE: Sunday, Aug 13 2017
+#+TITLE: tail -f honeybadger.io
+
+* Desc
+  #+BEGIN_QUOTE
+  tail-f_hb -- a dope tail -f cli; honeybadger faults
+  #+END_QUOTE
+  
+*** Motivation
+    Sick of honeybadger.io ui, thought NOt I am frequent visitor.
+    So with this:
+      * Quick search for errors, understand them(not with context overload), ssh to problem and fix it 😄
+      * Yeild .prom data_format to instument more (too lazy to even think about it now 😪 )
+
+** WIP
+   - a worker to scrape the updates
+   - a intutive ui
+* How to ?
+  #+BEGIN_SRC bash
+  go get github.com/thapakazi/tail-f_hb
+  source your_secrets_first && tail-f_hb
+  #+END_SRC
+  where, 
+  #+BEGIN_EXAMPLE
+  $ cat  ~/.your_secrets_first
+  export AUTH_TOKEN="api key from honeybadger"
+  export PROJECT_ID="project_id_to_tail_on" # get_it_form_honeybadger_too
+  #+END_EXAMPLE
+  
