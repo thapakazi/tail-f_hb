@@ -1,20 +1,14 @@
 package main
 
 import (
-	"fmt"
+	"encoding/json"
 	"github.com/namsral/flag"
 	"io/ioutil"
 	"net/http"
 )
 
-type Fault struct {
-	Id, ProjectId int
-	Message       string
-	Url           string
-	Env           string
-}
-
 var api_url, env, auth_token, order, limit, project_id string
+
 func init() {
 	// fmt.Println("from init(): I am init, I feel blessed")
 	flag.StringVar(&api_url, "api_url", "https://app.honeybadger.io/v2", "API URL")
@@ -27,14 +21,10 @@ func init() {
 
 }
 
-func construct_url()(url string) {
-	url = api_url + "/projects/" + project_id + "/faults?auth_token=" + auth_token + "&q=environment%3A" + env + "&order=" + order + "&limit=" + limit
-	// fmt.Println(url)
-	return
-}
+
 func main() {
-	
-	url := construct_url()
+
+	url := Construct_Url() // form url, check helpers function
 
 	// get the config
 	resp, err := http.Get(url)
@@ -46,7 +36,14 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	// fmt.Println("get:\n", keepLines(string(body), 3))
-	fmt.Println(string(body))
 
+	// fmt.Println(string(body))
+
+	faults := Faults{}
+	// decode json body first
+	json.Unmarshal([]byte(body), &faults)
+
+	PrintFaults(&faults) // print with colors, check print_out functions
 }
+
+
